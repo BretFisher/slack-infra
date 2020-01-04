@@ -6,10 +6,10 @@ WORKDIR /go/src/app
 
 COPY . .
 
-RUN go get -d -v ./...
+RUN go get -v
 
 RUN go build -o /go/bin/app
 
-FROM gcr.io/distroless/base as prod
+FROM alpine as prod
 COPY --from=base /go/bin/app /slack-event-log
-ENTRYPOINT ["/slack-event-log"]
+CMD ["/slack-event-log"]
