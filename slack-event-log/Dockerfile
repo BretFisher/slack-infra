@@ -13,5 +13,7 @@ RUN go get -v
 RUN go build -o /go/bin/app
 
 FROM debian:10-slim as prod
+RUN apt-get update && apt-get install -y ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 COPY --from=base /go/bin/app /slack-event-log
 CMD ["/slack-event-log"]
